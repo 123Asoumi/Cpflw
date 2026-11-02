@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    @apply bg-white text-ink font-sans antialiased;
+    font-size: 14px;
+    line-height: 1.5;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  h1, h2, h3 { @apply text-ink; letter-spacing: -0.01em; }
+  ::selection { background: #DCE7FF; }
+  :focus-visible { outline: 2px solid #315EFB; outline-offset: 2px; border-radius: 4px; }
+  input[type='date']::-webkit-calendar-picker-indicator,
+  input[type='time']::-webkit-calendar-picker-indicator { opacity: .5; cursor: pointer; }
+}
+
+@layer components {
+  .input {
+    @apply w-full h-9 rounded-md border border-line bg-white px-2.5 text-sm text-ink placeholder:text-ink-muted
+      transition-shadow focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 disabled:bg-side disabled:text-ink-soft;
+  }
+  .input-error { @apply border-danger focus:border-danger focus:ring-danger/20; }
+  .label { @apply block text-xs font-medium text-ink-soft mb-1; }
+  .chip { @apply inline-flex items-center gap-1 rounded px-1.5 py-0.5 text-xs font-medium; }
+  .kbd { @apply inline-flex items-center rounded border border-line bg-white px-1 text-[11px] text-ink-soft; }
+  .section-title { @apply text-xs font-semibold uppercase tracking-wide text-ink-soft; }
+  .table-th { @apply px-3 py-2 text-left text-xs font-medium text-ink-soft whitespace-nowrap; }
+  .table-td { @apply px-3 py-2 text-sm align-middle; }
+}
+
+.scrollbar-thin::-webkit-scrollbar { width: 8px; height: 8px; }
+.scrollbar-thin::-webkit-scrollbar-thumb { background: #E1E1DE; border-radius: 8px; }
