@@ -18,7 +18,9 @@ import { fileURLToPath } from 'node:url';
 import { buildSeed } from './seed.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const DATA_DIR = process.env.CAMPUSFLOW_DATA_DIR || path.resolve(__dirname, '../../data');
+// On Vercel the file system is read-only except /tmp (wiped on cold start).
+const DATA_DIR = process.env.CAMPUSFLOW_DATA_DIR
+  || (process.env.VERCEL ? '/tmp/campusflow' : path.resolve(__dirname, '../../data'));
 const DATA_FILE = path.join(DATA_DIR, 'store.json');
 const PERSIST = process.env.CAMPUSFLOW_PERSIST !== 'false';
 

@@ -4,7 +4,6 @@
  * activities always look current.
  */
 import bcrypt from 'bcryptjs';
-import crypto from 'node:crypto';
 
 export const DEMO_ACCOUNTS = {
   admin: { email: 'admin@campusflow.bj', password: 'Admin123!' },
@@ -23,7 +22,11 @@ function rng(seed = 42) {
 
 export function buildSeed() {
   const rand = rng(2026);
-  const id = () => crypto.randomUUID();
+  // Deterministic IDs: a regenerated seed (e.g. serverless cold start) keeps the
+  // same user IDs, so existing login tokens stay valid.
+  const idRand = rng(1337);
+  const hex = (n) => Array.from({ length: n }, () => Math.floor(idRand() * 16).toString(16)).join('');
+  const id = () => `${hex(8)}-${hex(4)}-4${hex(3)}-a${hex(3)}-${hex(12)}`;
   const ts = new Date().toISOString();
   const stamp = (o) => ({ createdAt: ts, updatedAt: ts, ...o });
   const daysFromNow = (d, h = 9) => {
